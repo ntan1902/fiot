@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/iot-core" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/iot-entity" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/iot-frontend" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/iot-frontend-mobile" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/iot-gateway" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/react-native-login-template" vcs="Git" />
+  </component>
+</project>
