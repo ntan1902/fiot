@@ -1,0 +1,51 @@
+server:
+  port: 5050
+  tomcat:
+    max-keep-alive-requests: 200
+    threads:
+      max: 400
+
+eureka:
+  instance:
+    hostname: "${EUREKA_INSTANCE_HOSTNAME:localhost}"
+  client:
+    serviceUrl:
+      defaultZone: "${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE:http://admin:admin@localhost:8761/eureka/}"
+    webclient:
+      enabled: true
+    registry-fetch-interval-seconds: 10
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          "[/**]":
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: authModule
+          uri: lb://auth
+          predicates:
+            - Path=/auth/api/**
+        - id: ruleEngineModule
+          uri: lb://rule-engine
+          predicates:
+            - Path=/rule-engine/api/**
+        - id: transportModule
+          uri: lb://transport
+          predicates:
+            - Path=/transport/**
+        - id: entityModule
+          uri: lb://entity
+          predicates:
+            - Path=/entity/api/**
+        - id: telemetryModule
+          uri: lb://telemetry
+          predicates:
+            - Path=/telemetry/api/**

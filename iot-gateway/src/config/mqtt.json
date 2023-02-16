@@ -1,0 +1,42 @@
+{
+  "broker": {
+    "name": "Default Local Broker",
+    "host": "127.0.0.1",
+    "port": 1883,
+    "clientId": "",
+    "maxMessageNumberPerWorker": 10,
+    "maxNumberOfWorkers": 100,
+    "security": {
+      "type": "",
+      "username": "",
+      "password": ""
+    }
+  },
+  "mapping": [
+    {
+      "topicFilter": "/v1/devices/gateway/telemetry",
+      "converter": {
+        "deviceNameExpression": "${serialNumber}",
+        "deviceLabelExpression": "${sensorLabel}",
+        "timeout": 60000,
+        "timeseries": [
+          {
+            "type": "double",
+            "key": "temperature",
+            "value": "${temp}"
+          },
+          {
+            "type": "double",
+            "key": "humidity",
+            "value": "${hum}"
+          },
+          {
+            "type": "string",
+            "key": "combine",
+            "value": "${hum}:${temp}"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "test-devices",
+  "version": "1.0.0",
+  "description": "",
+  "main": "device-server-rpc-request.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "geolocation-utils": "^1.2.5",
+    "gps-simulator": "^1.1.1",
+    "mqtt": "^4.3.7",
+    "node-ble": "^1.7.0"
+  }
+}

@@ -1,0 +1,23 @@
+server:
+  port: 8761
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  server:
+    expected-client-renewal-interval-seconds: 10
+  instance:
+    hostname: localhost
+logging:
+  level:
+    com:
+      netflix:
+        eureka: INFO
+        discovery: INFO
+
+spring:
+  security:
+    user:
+      name: admin
+      password: "${SPRING_SECURITY_USER:admin}"

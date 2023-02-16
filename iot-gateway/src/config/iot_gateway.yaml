@@ -1,0 +1,28 @@
+iot:
+  host: localhost # MQTT iot-core host
+  port: 1883 # MQTT iot-core port
+  protocolVersion: 4 # MQTT iot-core port
+  checkConnectorsConfigurationInSeconds: 60
+  telemetryRequestTopic: /v1/devices/telemetry/request
+  gwTelemetryRequestTopic: /v1/gateway/telemetry/request
+  checkingDeviceActivity:
+    checkDeviceInactivity: false
+    inactivityTimeoutSeconds: 120
+    inactivityCheckPeriodSeconds: 10
+  security:
+    accessToken: "55cd2d0276233bd2143d"
+  qos: 1
+
+connectors:
+  -
+    name: MQTT Broker Connector
+    type: mqtt
+    config: mqtt.json
+#  -
+#    name: Modbus Connector
+#    type: modbus
+#    config: modbus.json
+  -
+    name: Rest Connector
+    type: rest
+    config: rest.json

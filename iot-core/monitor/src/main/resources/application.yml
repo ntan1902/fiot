@@ -1,0 +1,49 @@
+server:
+  port: "${SERVER_PORT:8085}"
+spring:
+  application:
+    name: monitor
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  jpa:
+    properties:
+      javax.persistence.query.timeout: "${JAVAX_PERSISTENCE_QUERY_TIMEOUT:30000}"
+      hibernate:
+        format_sql: "${SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL:true}"
+    open-in-view: false
+    hibernate:
+      ddl-auto: "${SPRING_JPA_HIBERNATE_DDL_AUTO:update}"
+    database-platform: "${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.PostgreSQLDialect}"
+    show-sql: "${SPRING_JPA_SHOW_SQL:false}"
+
+  datasource:
+    driverClassName: "${SPRING_DRIVER_CLASS_NAME:org.postgresql.Driver}"
+    url: "${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/iot_entity?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true}"
+    username: "${SPRING_DATASOURCE_USERNAME:postgres}"
+    password: "${SPRING_DATASOURCE_PASSWORD:123456}"
+    hikari:
+      maximumPoolSize: "${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:16}"
+
+queue:
+  rabbitmq:
+    alarm:
+      exchange-name: "${QUEUE_RABBITMQ_ALARM_EXCHANGE_NAME:alarmExchange}"
+      host: "${QUEUE_RABBITMQ_ALARM_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_ALARM_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_ALARM_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_ALARM_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_ALARM_CONNECTION_TIMEOUT:60000}"
+
+check-health:
+  run-forever: true
+  repeat-interval-ms: 5000
+  initial-offset-ms: 1000
+
+eureka:
+  instance:
+    hostname: "${EUREKA_INSTANCE_HOSTNAME:localhost}"
+  client:
+    serviceUrl:
+      defaultZone: "${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE:http://admin:admin@localhost:8761/eureka/}"

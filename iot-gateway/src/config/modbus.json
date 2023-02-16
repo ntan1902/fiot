@@ -1,0 +1,27 @@
+{
+  "master": {
+    "slaves": [
+      {
+        "host": "127.0.0.1",
+        "port": 50200,
+        "type": "tcp",
+        "timeout": 3500,
+        "unitId": 1,
+        "deviceName": "Temperature Sensor",
+        "deviceLabel": "Thermometer",
+        "connectAttemptTimeMs": 5000,
+        "connectAttemptCount": 5,
+        "waitAfterFailedAttemptsMs": 300000,
+        "timeseries": [
+          {
+            "key": "temperature",
+            "type": "long",
+            "functionCode": 3,
+            "registerCount": 1,
+            "address": 0
+          }
+        ]
+      }
+    ]
+  }
+}

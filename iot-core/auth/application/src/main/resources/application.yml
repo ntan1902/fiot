@@ -1,0 +1,105 @@
+server:
+  port: "${SERVER_PORT:8080}"
+  servlet:
+    context-path: "/auth"
+spring:
+  application:
+    name: auth
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  jpa:
+    properties:
+      javax.persistence.query.timeout: "${JAVAX_PERSISTENCE_QUERY_TIMEOUT:30000}"
+      hibernate:
+        format_sql: "${SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL:true}"
+    open-in-view: false
+    hibernate:
+      ddl-auto: "${SPRING_JPA_HIBERNATE_DDL_AUTO:update}"
+    database-platform: "${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.PostgreSQLDialect}"
+    show-sql: "${SPRING_JPA_SHOW_SQL:true}"
+
+  datasource:
+    driverClassName: "${SPRING_DRIVER_CLASS_NAME:org.postgresql.Driver}"
+    url: "${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/iot_auth?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true}"
+    username: "${SPRING_DATASOURCE_USERNAME:postgres}"
+    password: "${SPRING_DATASOURCE_PASSWORD:123456}"
+    hikari:
+      maximumPoolSize: "${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:16}"
+
+  mail:
+    host: "${SPRING_MAIL_HOST:localhost}"
+    port: "${SPRING_MAIL_PORT:1025}"
+    username: "${SPRING_MAIL_USERNAME:dev}"
+    password: "${SPRING_MAIL_PASSWORD:dev}"
+
+    from: "${SPRING_MAIL_FROM:info@fiot.io}"
+    base-url: "${SPRING_MAIL_BASE_URL:http://localhost:3000}"
+
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+
+management:
+  endpoints:
+    web:
+      base-path: ""
+      exposure:
+        include: "health, info, prometheus"
+      path-mapping:
+        # mapping /prometheus to /metrics
+        prometheus: "metrics"
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    distribution:
+      percentiles:
+        all: 0.99
+      percentiles-histogram:
+        all: true
+
+
+security:
+  jwt:
+    access-token-exp: "${JWT_ACCESS_TOKEN_EXP:604800}" # Number of seconds (2.5 hours)
+    refresh-token-exp: "${JWT_REFRESH_TOKEN_EXP:2592000}" # Number of seconds (1 week)
+    issuer: "${JWT_ISSUER:com.iot.issuer}"
+    private-key-file: "${JWT_PRIVATE_KEY_FILE:private_key_pkcs8.pem}"
+    public-key-file: "${JWT_PUBLIC_KEY_FILE:public_key.pem}"
+# spring CORS configuration
+spring.mvc.cors:
+  mappings:
+    # Intercept path
+    "[/api/**]":
+      #Comma-separated list of origins to allow. '*' allows all origins. When not set,CORS support is disabled.
+      allowed-origins: "*"
+      #Comma-separated list of methods to allow. '*' allows all methods.
+      allowed-methods: "*"
+      #Comma-separated list of headers to allow in a request. '*' allows all headers.
+      allowed-headers: "*"
+      #How long, in seconds, the response from a pre-flight request can be cached by clients.
+      max-age: "1800"
+#      #Set whether credentials are supported. When not set, credentials are not supported.
+#      allow-credentials: "true"
+      allowed-origin-pattern: "*"
+
+entity.service:
+  host: "${ENTITY_SERVICE_URL:entity}"
+  max-attempt: "${ENTITY_SERVICE_MAX_ATTEMPT:3}"
+
+eureka:
+  instance:
+    hostname: "${EUREKA_INSTANCE_HOSTNAME:localhost}"
+  client:
+    serviceUrl:
+      defaultZone: "${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE:http://admin:admin@localhost:8761/eureka/}"

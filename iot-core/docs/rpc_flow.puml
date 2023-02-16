@@ -1,0 +1,43 @@
+@startuml
+
+actor "App" as app
+entity "Device" as device
+participant "Transport" as transport
+participant "Entity" as entities
+participant "Rule Engine" as ruleEngine
+
+database "Entity DB" as entityDb
+database "RuleEngine DB" as ruleDb
+queue "Message Queue" as messageQueue
+queue "MQTT Broker" as mqtt
+
+app -> entities++: 1.Request action\n(POST /api/devices/rpc/request/{device_Id})
+entities -> entities++: 2. Validate user role\nand device
+entities -> entityDb++: 3. Find device\nby device_id
+entityDb --> entities--: 4. Return device
+return
+
+entities -> messageQueue--: 5. Publish rpc request device message [1]\n(deviceRpcExchange)
+
+messageQueue --> ruleEngine++: 6. Consume message[1]
+ruleEngine -> ruleDb++: 7. Find rule nodes and rule chain\n(rule_chain_id)
+ruleDb --> ruleEngine--: 8. Return result
+
+ruleEngine -> ruleEngine++: 9. Process rule nodes
+return
+
+opt <font color=blue>10. RPC Request To Device
+   ruleEngine -> messageQueue--: 11. Publish rpc request to device [2]\n(deviceRpcRequestExchange)
+   messageQueue -> transport++: 12. Consume message[2]
+   transport -> mqtt--: 13. Publish rpc request to device [3]\n(/v1/devices/rpc/request/{device_id}/{request_id})
+   mqtt -> device++: 14. Consume message[3]
+   device -> device++: 15. Process request
+   return
+   device -> mqtt--: 16. Publish rpc response [4]\n(/v1/devices/rpc/response/{request_id})
+   mqtt -> transport++: 17. Consume message [4]
+   transport -> messageQueue--: 18. Publish rpc response from device [5]\n(deviceRpcResponseExchange)
+   messageQueue --> ruleEngine++: 19. Consume message[5]
+   ruleEngine -> ruleEngine++: 20. Process rule nodes
+   return
+end
+@enduml

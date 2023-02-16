@@ -1,0 +1,69 @@
+server:
+  port: "${SERVER_PORT:8083}"
+  servlet:
+    context-path: "/telemetry"
+spring:
+  application:
+    name: telemetry
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  jpa:
+    properties:
+      javax.persistence.query.timeout: "${JAVAX_PERSISTENCE_QUERY_TIMEOUT:30000}"
+      hibernate:
+        format_sql: "${SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL:true}"
+    open-in-view: false
+    hibernate:
+      ddl-auto: "${SPRING_JPA_HIBERNATE_DDL_AUTO:update}"
+    database-platform: "${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.PostgreSQLDialect}"
+    show-sql: "${SPRING_JPA_SHOW_SQL:true}"
+
+  datasource:
+    driverClassName: "${SPRING_DRIVER_CLASS_NAME:org.postgresql.Driver}"
+    url: "${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/iot_telemetry?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true}"
+    username: "${SPRING_DATASOURCE_USERNAME:postgres}"
+    password: "${SPRING_DATASOURCE_PASSWORD:123456}"
+    hikari:
+      maximumPoolSize: "${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:16}"
+queue:
+  rabbitmq:
+    telemetry:
+      queue-name: "${QUEUE_RABBITMQ_QUEUE_NAME:saveTimeSeriesQueue}"
+      exchange-name: "${QUEUE_RABBITMQ_EXCHANGE_NAME:telemetryExchange}"
+      host: "${QUEUE_RABBITMQ_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_CONNECTION_TIMEOUT:60000}"
+
+security:
+  jwt:
+    access-token-exp: "${JWT_ACCESS_TOKEN_EXP:604800}" # Number of seconds (2.5 hours)
+    issuer: "${JWT_ISSUER:com.iot.issuer}"
+    public-key-file: "${JWT_PUBLIC_KEY_FILE:public_key.pem}"
+
+# spring CORS configuration
+spring.mvc.cors:
+  mappings:
+    # Intercept path
+    "[/api/**]":
+      #Comma-separated list of origins to allow. '*' allows all origins. When not set,CORS support is disabled.
+      allowed-origins: "*"
+      #Comma-separated list of methods to allow. '*' allows all methods.
+      allowed-methods: "*"
+      #Comma-separated list of headers to allow in a request. '*' allows all headers.
+      allowed-headers: "*"
+      #How long, in seconds, the response from a pre-flight request can be cached by clients.
+      max-age: "1800"
+      #      #Set whether credentials are supported. When not set, credentials are not supported.
+      #      allow-credentials: "true"
+      allowed-origin-pattern: "*"
+
+eureka:
+  instance:
+    hostname: "${EUREKA_INSTANCE_HOSTNAME:localhost}"
+  client:
+    serviceUrl:
+      defaultZone: "${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE:http://admin:admin@localhost:8761/eureka/}"

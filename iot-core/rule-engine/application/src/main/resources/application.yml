@@ -1,0 +1,150 @@
+server:
+  port: "${SERVER_PORT:8084}"
+  servlet:
+    context-path: "/rule-engine"
+spring:
+  application:
+    name: rule-engine
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  jpa:
+    properties:
+      javax.persistence.query.timeout: "${JAVAX_PERSISTENCE_QUERY_TIMEOUT:30000}"
+      hibernate:
+        format_sql: "${SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL:true}"
+    open-in-view: false
+    hibernate:
+      ddl-auto: "${SPRING_JPA_HIBERNATE_DDL_AUTO:update}"
+    database-platform: "${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.PostgreSQLDialect}"
+    show-sql: "${SPRING_JPA_SHOW_SQL:true}"
+
+  datasource:
+    driverClassName: "${SPRING_DRIVER_CLASS_NAME:org.postgresql.Driver}"
+    url: "${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/iot_rules?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true}"
+    username: "${SPRING_DATASOURCE_USERNAME:postgres}"
+    password: "${SPRING_DATASOURCE_PASSWORD:123456}"
+    hikari:
+      maximumPoolSize: "${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:16}"
+
+  redis:
+    host: "${SPRING_REDIS_HOST:localhost}"
+    port: "${SPRING_REDIS_PORT:6379}"
+    password: "${SPRING_REDIS_PASSWORD:}"
+queue:
+  rabbitmq:
+    device-telemetry:
+      queue-name: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_QUEUE_NAME:deviceTelemetryQueue}"
+      exchange-name: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_EXCHANGE_NAME:deviceTelemetryExchange}"
+      host: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_CONNECTION_TIMEOUT:60000}"
+
+    device-rpc:
+      queue-name: "${QUEUE_RABBITMQ_DEVICE_RPC_QUEUE_NAME:deviceRpcQueue}"
+      exchange-name: "${QUEUE_RABBITMQ_DEVICE_RPC_EXCHANGE_NAME:deviceRpcExchange}"
+      host: "${QUEUE_RABBITMQ_DEVICE_RPC_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_DEVICE_RPC_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_DEVICE_RPC_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_DEVICE_RPC_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_DEVICE_RPC_CONNECTION_TIMEOUT:60000}"
+
+    server-rpc-request:
+      exchange-name: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_EXCHANGE_NAME:serverRpcRequestExchange}"
+      host: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_CONNECTION_TIMEOUT:60000}"
+
+    server-rpc-response:
+      queue-name: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_QUEUE_NAME:serverRpcResponseQueue}" # Must create different queue name for each instance
+      exchange-name: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_EXCHANGE_NAME:serverRpcResponseExchange}"
+      host: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_CONNECTION_TIMEOUT:60000}"
+
+    client-rpc-request:
+      queue-name: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_QUEUE_NAME:clientRpcRequestQueue}" # Must create different queue name for each instance
+      exchange-name: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_EXCHANGE_NAME:clientRpcRequestExchange}"
+      host: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_CONNECTION_TIMEOUT:60000}"
+
+    client-rpc-response:
+      exchange-name: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_EXCHANGE_NAME:clientRpcResponseExchange}"
+      host: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_CONNECTION_TIMEOUT:60000}"
+
+    telemetry:
+      exchange-name: "${QUEUE_RABBITMQ_TELEMETRY_EXCHANGE_NAME:telemetryExchange}"
+      host: "${QUEUE_RABBITMQ_TELEMETRY_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_TELEMETRY_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_TELEMETRY_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_TELEMETRY_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_TELEMETRY_CONNECTION_TIMEOUT:60000}"
+
+    debug:
+      exchange-name: "${QUEUE_RABBITMQ_DEBUG_EXCHANGE_NAME:debugExchange}"
+      host: "${QUEUE_RABBITMQ_DEBUG_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_DEBUG_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_DEBUG_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_DEBUG_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_DEBUG_CONNECTION_TIMEOUT:60000}"
+
+    alarm:
+      exchange-name: "${QUEUE_RABBITMQ_ALARM_EXCHANGE_NAME:alarmExchange}"
+      host: "${QUEUE_RABBITMQ_ALARM_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_ALARM_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_ALARM_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_ALARM_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_ALARM_CONNECTION_TIMEOUT:60000}"
+
+security:
+  jwt:
+    access-token-exp: "${JWT_ACCESS_TOKEN_EXP:604800}" # Number of seconds (2.5 hours)
+    issuer: "${JWT_ISSUER:com.iot.issuer}"
+    public-key-file: "${JWT_PUBLIC_KEY_FILE:public_key.pem}"
+
+# spring CORS configuration
+spring.mvc.cors:
+  mappings:
+    # Intercept path
+    "[/api/**]":
+      #Comma-separated list of origins to allow. '*' allows all origins. When not set,CORS support is disabled.
+      allowed-origins: "*"
+      #Comma-separated list of methods to allow. '*' allows all methods.
+      allowed-methods: "*"
+      #Comma-separated list of headers to allow in a request. '*' allows all headers.
+      allowed-headers: "*"
+      #How long, in seconds, the response from a pre-flight request can be cached by clients.
+      max-age: "1800"
+      #      #Set whether credentials are supported. When not set, credentials are not supported.
+      #      allow-credentials: "true"
+      allowed-origin-pattern: "*"
+
+js:
+  nashorn:
+    monitor-thread-pool-size: "${JS_NASHORN_MONITOR_THREAD_POOL_SIZE:4}"
+    max-cpu-time: "${JS_NASHORN_MAX_CPU_TIME:8000}"
+    allow-no-braces: "${JS_NASHORN_ALLOW_NO_BRACES:false}"
+    allow-load-functions: "${JS_NASHORN_ALLOW_LOAD_FUNCTIONS:true}"
+    max-prepared-statements: "${JS_NASHORN_MAX_PREPARED_STATEMENTS:30}"
+    max-errors: "${JS_NASHORN_MAX_ERRORS:3}"
+
+eureka:
+  instance:
+    hostname: "${EUREKA_INSTANCE_HOSTNAME:localhost}"
+  client:
+    serviceUrl:
+      defaultZone: "${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE:http://admin:admin@localhost:8761/eureka/}"

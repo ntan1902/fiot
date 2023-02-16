@@ -1,0 +1,184 @@
+server:
+  port: "${SERVER_PORT:8082}"
+  servlet:
+    context-path: "/transport"
+spring:
+  application:
+    name: transport
+  rabbitmq:
+    host: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_HOST:localhost}"
+    port: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_PORT:5672}"
+    username: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_USERNAME:guest}"
+    password: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_PASSWORD:guest}"
+
+entity.service:
+  host: "${ENTITY_SERVICE_URL:entity}"
+  max-attempt: "${ENTITY_SERVICE_MAX_ATTEMPT:3}"
+
+queue:
+  rabbitmq:
+    device-telemetry:
+      exchange-name: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_EXCHANGE_NAME:deviceTelemetryExchange}"
+      host: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_DEVICE_TELEMETRY_CONNECTION_TIMEOUT:60000}"
+
+    telemetry:
+      queue-name: "${QUEUE_RABBITMQ_TELEMETRY_QUEUE_NAME:sendTelemetryQueue}"
+      exchange-name: "${QUEUE_RABBITMQ_TELEMETRY_EXCHANGE_NAME:telemetryExchange}"
+      host: "${QUEUE_RABBITMQ_TELEMETRY_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_TELEMETRY_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_TELEMETRY_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_TELEMETRY_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_TELEMETRY_CONNECTION_TIMEOUT:60000}"
+
+    debug:
+      queue-name: "${QUEUE_RABBITMQ_DEBUG_QUEUE_NAME:sendDebugQueue}"
+      exchange-name: "${QUEUE_RABBITMQ_DEBUG_EXCHANGE_NAME:debugExchange}"
+      host: "${QUEUE_RABBITMQ_DEBUG_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_DEBUG_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_DEBUG_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_DEBUG_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_DEBUG_CONNECTION_TIMEOUT:60000}"
+
+    alarm:
+      queue-name: "${QUEUE_RABBITMQ_ALARM_QUEUE_NAME:sendAlarmQueue}"
+      exchange-name: "${QUEUE_RABBITMQ_ALARM_EXCHANGE_NAME:alarmExchange}"
+      host: "${QUEUE_RABBITMQ_ALARM_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_ALARM_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_ALARM_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_ALARM_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_ALARM_CONNECTION_TIMEOUT:60000}"
+
+    server-rpc-request:
+      queue-name: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_QUEUE_NAME:serverRpcRequestQueue}"
+      exchange-name: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_EXCHANGE_NAME:serverRpcRequestExchange}"
+      host: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_CONNECTION_TIMEOUT:60000}"
+
+    server-rpc-response:
+      exchange-name: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_EXCHANGE_NAME:serverRpcResponseExchange}"
+      host: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_CONNECTION_TIMEOUT:60000}"
+
+    client-rpc-request:
+      exchange-name: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_EXCHANGE_NAME:clientRpcRequestExchange}"
+      host: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_CONNECTION_TIMEOUT:60000}"
+
+    client-rpc-response:
+      queue-name: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_QUEUE_NAME:clientRpcResponseQueue}"
+      exchange-name: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_EXCHANGE_NAME:clientRpcResponseExchange}"
+      host: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_CONNECTION_TIMEOUT:60000}"
+
+    socket:
+      host: "${QUEUE_RABBITMQ_SOCKET_HOST:localhost}"
+      port: "${QUEUE_RABBITMQ_SOCKET_PORT:61613}"
+      username: "${QUEUE_RABBITMQ_SOCKET_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_SOCKET_PASSWORD:guest}"
+      app-dest: "${QUEUE_RABBITMQ_SOCKET_APP_DEST:/app}"
+      stomp-broker: "${QUEUE_RABBITMQ_SOCKET_STOMP_BROKER:/topic}"
+      sockjs-endpoint: "${QUEUE_RABBITMQ_SOCKET_SOCKJS_ENDPOINT:/ws}"
+
+    devices-telemetry-mqtt:
+      queue-name: "${QUEUE_RABBITMQ_DEVICES_TELEMETRY_MQTT_QUEUE_NAME:devicesTelemetryRequestQueue}"
+      exchange-name: "${QUEUE_RABBITMQ_DEVICES_TELEMETRY_MQTT_EXCHANGE_NAME:amq.topic}"
+      routing-key: "${QUEUE_RABBITMQ_DEVICES_TELEMETRY_MQTT_ROUTING_KEY:.v1.devices.telemetry.request}"
+      host: "${QUEUE_RABBITMQ_DEVICES_TELEMETRY_MQTT_HOST:127.0.0.1}"
+      port: "${QUEUE_RABBITMQ_DEVICES_TELEMETRY_MQTT_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_DEVICES_TELEMETRY_MQTT_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_DEVICES_TELEMETRY_MQTT_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_DEVICES_TELEMETRY_MQTT_CONNECTION_TIMEOUT:60000}"
+
+    gateway-telemetry-mqtt:
+      queue-name: "${QUEUE_RABBITMQ_GATEWAY_TELEMETRY_MQTT_QUEUE_NAME:gatewayTelemetryRequestQueue}"
+      exchange-name: "${QUEUE_RABBITMQ_GATEWAY_TELEMETRY_MQTT_EXCHANGE_NAME:amq.topic}"
+      routing-key: "${QUEUE_RABBITMQ_GATEWAY_TELEMETRY_MQTT_ROUTING_KEY:.v1.gateway.telemetry.request}"
+      host: "${QUEUE_RABBITMQ_GATEWAY_TELEMETRY_MQTT_HOST:127.0.0.1}"
+      port: "${QUEUE_RABBITMQ_GATEWAY_TELEMETRY_MQTT_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_GATEWAY_TELEMETRY_MQTT_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_GATEWAY_TELEMETRY_MQTT_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_GATEWAY_TELEMETRY_MQTT_CONNECTION_TIMEOUT:60000}"
+
+    server-rpc-request-mqtt:
+      exchange-name: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_MQTT_EXCHANGE_NAME:amq.topic}"
+      routing-key: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_MQTT_ROUTING_KEY:.v1.server.rpc.request}"
+      host: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_MQTT_HOST:127.0.0.1}"
+      port: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_MQTT_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_MQTT_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_MQTT_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_SERVER_RPC_REQUEST_MQTT_CONNECTION_TIMEOUT:60000}"
+
+    server-rpc-response-mqtt:
+      queue-name: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_MQTT_QUEUE_NAME:serverRpcResponseMqttQueue}"
+      exchange-name: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_MQTT_EXCHANGE_NAME:amq.topic}"
+      routing-key: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_MQTT_ROUTING_KEY:.v1.server.rpc.response.#}"
+      host: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_MQTT_HOST:127.0.0.1}"
+      port: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_MQTT_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_MQTT_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_MQTT_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_SERVER_RPC_RESPONSE_MQTT_CONNECTION_TIMEOUT:60000}"
+
+    client-rpc-request-mqtt:
+      queue-name: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_MQTT_QUEUE_NAME:clientRpcRequestMqttQueue}"
+      exchange-name: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_MQTT_EXCHANGE_NAME:amq.topic}"
+      routing-key: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_MQTT_ROUTING_KEY:.v1.client.rpc.request.#}"
+      host: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_MQTT_HOST:127.0.0.1}"
+      port: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_MQTT_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_MQTT_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_MQTT_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_CLIENT_RPC_REQUEST_MQTT_CONNECTION_TIMEOUT:60000}"
+
+    client-rpc-response-mqtt:
+      exchange-name: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_MQTT_EXCHANGE_NAME:amq.topic}"
+      routing-key: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_MQTT_ROUTING_KEY:.v1.client.rpc.response}"
+      host: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_MQTT_HOST:127.0.0.1}"
+      port: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_MQTT_PORT:5672}"
+      username: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_MQTT_USERNAME:guest}"
+      password: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_MQTT_PASSWORD:guest}"
+      connection-timeout: "${QUEUE_RABBITMQ_CLIENT_RPC_RESPONSE_MQTT_CONNECTION_TIMEOUT:60000}"
+
+security:
+  jwt:
+    access-token-exp: "${JWT_ACCESS_TOKEN_EXP:604800}" # Number of seconds (2.5 hours)
+    issuer: "${JWT_ISSUER:com.iot.issuer}"
+    public-key-file: "${JWT_PUBLIC_KEY_FILE:public_key.pem}"
+
+# spring CORS configuration
+spring.mvc.cors:
+  mappings:
+    # Intercept path
+    "[/api/**]":
+      #Comma-separated list of origins to allow. '*' allows all origins. When not set,CORS support is disabled.
+      allowed-origins: "*"
+      #Comma-separated list of methods to allow. '*' allows all methods.
+      allowed-methods: "*"
+      #Comma-separated list of headers to allow in a request. '*' allows all headers.
+      allowed-headers: "*"
+      #How long, in seconds, the response from a pre-flight request can be cached by clients.
+      max-age: "1800"
+      #      #Set whether credentials are supported. When not set, credentials are not supported.
+      #      allow-credentials: "true"
+      allowed-origin-pattern: "*"
+
+eureka:
+  instance:
+    hostname: "${EUREKA_INSTANCE_HOSTNAME:localhost}"
+  client:
+    serviceUrl:
+      defaultZone: "${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE:http://admin:admin@localhost:8761/eureka/}"

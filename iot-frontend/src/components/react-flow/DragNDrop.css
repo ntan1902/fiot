@@ -1,0 +1,37 @@
+.drag-n-drop {
+    flex-direction: column;
+    display: flex;
+    height: 100%;
+}
+
+.drag-n-drop aside {
+    border-right: 1px solid #eee;
+    padding: 15px 10px;
+    font-size: 12px;
+    background: #fcfcfc;
+}
+
+.drag-n-drop aside > * {
+    margin-bottom: 10px;
+    cursor: grab;
+}
+
+.drag-n-drop aside .description {
+    margin-bottom: 10px;
+}
+
+.drag-n-drop .reactflow-wrapper {
+    flex-grow: 1;
+    height: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    .drag-n-drop {
+        flex-direction: row;
+    }
+
+    .drag-n-drop aside {
+        width: 20%;
+        max-width: 180px;
+    }
+}

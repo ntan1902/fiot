@@ -1,0 +1,69 @@
+$primary-color: #1890ff;
+$link-color: #1890ff;
+$success-color: #27ae60;
+$warning-color: #faad14;
+$error-color: #d24d57;
+$font-size-base: 14px;
+$heading-color: rgba(0, 0, 0, 0.85); // heading text color
+$text-color: rgba(0, 0, 0, 0.65); // major text color
+$text-color-secondary: rgba(0, 0, 0, .45); // secondary text color
+$disabled-color: rgba(0, 0, 0, .25); // disable state color
+$border-radius-base: 4px; // major border radius
+$border-color-base: #d9d9d9; // major border color
+$box-shadow-base: 0 2px 8px rgba(0, 0, 0, 0.15); // major shadow for layers
+$blue: #007bff !default;
+$indigo: #6610f2 !default;
+$purple: #7a59ac !default;
+$pink: #e83e8c !default;
+$red: #de6764 !default;
+$orange: #fd7e14 !default;
+$yellow: #f0ad4e !default;
+$green: #5cb85c !default;
+$teal: #20c997 !default;
+$cyan: #17a2b8 !default;
+$secondary-text: #9B9B9B;
+
+$primary: #1890ff;
+$danger: #f5222d;
+$white: #fff;
+$body_bg: #ecf0f1;
+$sky_blue: #5984EE;
+$light-blue: #4BBACE;
+$pink: #e7538b;
+$light-green: #45CD93;
+$red-theme: rgb(222, 103, 100) !default;
+$sky-blue: #3ca2e0 !default;
+$light-blue: #5bc0de !default;
+$dark: #1a252f !default;
+$sky: #3BA2DF !default;
+$dark-gray: #5f6b78 !default;
+$lightGray: #6C7A89 !default;
+$lightBlue: #2B3E50 !default;
+$darkSky: #2089c9 !default;
+$lightRed: #D24D57 !default;
+$lightGreen: #27ae60 !default;
+$lightPurple: #957BBD !default;
+$graybg: #ecf0f1 !default;
+$purple: #957bbd;
+$dark-blue: #001529;
+$grey: #6c7a89;
+
+.sale {
+  background: $sky_blue !important;
+  color: $white !important;
+}
+
+.active {
+  background: $dark-gray !important;
+  color: $light-green !important;
+}
+
+.inactive {
+  background: $dark-gray !important;
+  color: $white !important;
+}
+
+.visitor {
+  background: $dark-gray !important;
+  color: $white !important;
+}

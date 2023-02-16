@@ -1,0 +1,17 @@
+node_modules
+
+private.key
+public.key
+
+.env
+
+/logs
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+
+
